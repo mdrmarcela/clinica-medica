@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Sistema de gerenciamento de clínica médica usado em uma oficina prática de Scrum."
+    />
+    <title>Clínica Vida | Gestão de Consultas</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">+</div>
+          <div>
+            <strong>Clínica Vida</strong>
+            <span>Gestão de consultas</span>
+          </div>
+        </div>
+
+        <nav class="nav" id="menu" aria-label="Menu principal">
+          <button class="nav-item active" data-section="inicio">
+            <span class="nav-icon">⌂</span> Visão geral
+          </button>
+          <p class="nav-label">Cadastros</p>
+          <button class="nav-item" data-section="secretarias">
+            <span class="nav-icon">S</span> Secretárias
+          </button>
+          <button class="nav-item" data-section="salas">
+            <span class="nav-icon">▦</span> Salas
+          </button>
+          <button class="nav-item" data-section="convenios">
+            <span class="nav-icon">C</span> Convênios
+          </button>
+          <button class="nav-item" data-section="pacientes">
+            <span class="nav-icon">P</span> Pacientes
+          </button>
+          <button class="nav-item" data-section="medicos">
+            <span class="nav-icon">M</span> Médicos
+          </button>
+          <button class="nav-item" data-section="especialidades">
+            <span class="nav-icon">E</span> Especialidades
+          </button>
+          <p class="nav-label">Atendimento</p>
+          <button class="nav-item" data-section="agendamentos">
+            <span class="nav-icon">◷</span> Agendamentos
+          </button>
+        </nav>
+
+        <div class="sidebar-note">
+          <span>Oficina Scrum</span>
+          <small>Projeto educacional • IFSC</small>
+        </div>
+      </aside>
+
+      <div class="workspace">
+        <header class="topbar">
+          <button id="mobile-menu" class="mobile-menu" aria-label="Abrir menu">
+            ☰
+          </button>
+          <div>
+            <p class="eyebrow">Sistema de gerenciamento</p>
+            <h1 id="page-title">Visão geral</h1>
+          </div>
+          <div class="topbar-badge"><span></span> Sistema local</div>
+        </header>
+
+        <main class="content">
+          <section id="inicio" class="page active-page">
+            <div class="hero-card">
+              <div>
+                <span class="hero-kicker">Bem-vindo</span>
+                <h2>Organize a rotina da clínica em um só lugar.</h2>
+                <p>
+                  Cadastre médicos, pacientes e salas e mantenha os agendamentos
+                  organizados, evitando conflitos de horário.
+                </p>
+                <button class="primary-btn" data-go="agendamentos">
+                  Novo agendamento
+                </button>
+              </div>
+              <div class="hero-visual" aria-hidden="true">
+                <div class="calendar-card">
+                  <div class="calendar-top"><span></span><span></span></div>
+                  <strong>Agenda</strong>
+                  <div class="calendar-line long"></div>
+                  <div class="calendar-line"></div>
+                  <div class="calendar-line short"></div>
+                </div>
+                <div class="pulse-circle">+</div>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <article class="stat-card">
+                <span>Pacientes</span><strong id="stat-pacientes">0</strong
+                ><small>cadastrados</small>
+              </article>
+              <article class="stat-card">
+                <span>Médicos</span><strong id="stat-medicos">0</strong
+                ><small>cadastrados</small>
+              </article>
+              <article class="stat-card">
+                <span>Salas</span><strong id="stat-salas">0</strong
+                ><small>disponíveis</small>
+              </article>
+              <article class="stat-card">
+                <span>Consultas</span><strong id="stat-agendamentos">0</strong
+                ><small>agendadas</small>
+              </article>
+            </div>
+
+            <div class="dashboard-grid">
+              <article class="panel">
+                <div class="panel-header">
+                  <div>
+                    <p class="eyebrow">Próximos atendimentos</p>
+                    <h3>Agenda da clínica</h3>
+                  </div>
+                  <button class="text-btn" data-go="agendamentos">
+                    Ver agenda →
+                  </button>
+                </div>
+                <div id="agenda-resumo" class="agenda-list"></div>
+              </article>
+
+              <article class="panel quick-panel">
+                <div class="panel-header">
+                  <div>
+                    <p class="eyebrow">Acesso rápido</p>
+                    <h3>Cadastros</h3>
+                  </div>
+                </div>
+                <div class="quick-grid">
+                  <button data-go="pacientes">
+                    <b>+</b><span>Novo paciente</span>
+                  </button>
+                  <button data-go="medicos">
+                    <b>+</b><span>Novo médico</span>
+                  </button>
+                  <button data-go="salas">
+                    <b>+</b><span>Nova sala</span>
+                  </button>
+                  <button data-go="convenios">
+                    <b>+</b><span>Novo convênio</span>
+                  </button>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section id="secretarias" class="page" data-title="Secretárias">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Cadastros</p>
+                <h2>Secretárias</h2>
+                <p>
+                  Gerencie as pessoas responsáveis pelo atendimento e pelos
+                  agendamentos.
+                </p>
+              </div>
+            </div>
+            <div class="two-column">
+              <article class="panel form-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3 id="secretaria-form-title">Nova secretária</h3>
+                    <p>Preencha os dados abaixo.</p>
+                  </div>
+                </div>
+                <form id="form-secretaria" class="form-grid">
+                  <input type="hidden" id="secretaria-id" />
+                  <label class="field"
+                    ><span>Nome completo</span
+                    ><input
+                      id="secretaria-nome"
+                      type="text"
+                      placeholder="Ex.: Ana Souza"
+                      required
+                  /></label>
+                  <label class="field"
+                    ><span>E-mail</span
+                    ><input
+                      id="secretaria-email"
+                      type="email"
+                      placeholder="ana@clinica.com"
+                      required
+                  /></label>
+                  <div class="form-actions">
+                    <button
+                      type="button"
+                      class="secondary-btn hidden"
+                      id="cancelar-secretaria"
+                    >
+                      Cancelar</button
+                    ><button
+                      class="primary-btn"
+                      type="submit"
+                      id="salvar-secretaria"
+                    >
+                      Cadastrar
+                    </button>
+                  </div>
+                </form>
+              </article>
+              <article class="panel list-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Secretárias cadastradas</h3>
+                    <p id="secretarias-count">0 registros</p>
+                  </div>
+                </div>
+                <div id="lista-secretarias"></div>
+              </article>
+            </div>
+          </section>
+
+          <section id="salas" class="page" data-title="Salas">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Cadastros</p>
+                <h2>Salas</h2>
+                <p>
+                  Cadastre e identifique as salas disponíveis para atendimento.
+                </p>
+              </div>
+            </div>
+            <div class="two-column">
+              <article class="panel form-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3 id="sala-form-title">Nova sala</h3>
+                    <p>A sigla pode ter até 5 caracteres.</p>
+                  </div>
+                </div>
+                <form id="form-sala" class="form-grid">
+                  <input type="hidden" id="sala-id" /><label class="field"
+                    ><span>Nome da sala</span
+                    ><input
+                      id="sala-nome"
+                      placeholder="Ex.: Sala de Cardiologia"
+                      required /></label
+                  ><label class="field"
+                    ><span>Sigla</span
+                    ><input
+                      id="sala-sigla"
+                      maxlength="5"
+                      placeholder="CARD"
+                      required
+                  /></label>
+                  <div class="form-actions">
+                    <button
+                      type="button"
+                      class="secondary-btn hidden"
+                      id="cancelar-sala"
+                    >
+                      Cancelar</button
+                    ><button class="primary-btn" type="submit" id="salvar-sala">
+                      Cadastrar
+                    </button>
+                  </div>
+                </form>
+              </article>
+              <article class="panel list-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Salas cadastradas</h3>
+                    <p id="salas-count">0 registros</p>
+                  </div>
+                </div>
+                <div id="lista-salas"></div>
+              </article>
+            </div>
+          </section>
+
+          <section id="convenios" class="page" data-title="Convênios">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Cadastros</p>
+                <h2>Convênios</h2>
+                <p>Mantenha os convênios aceitos pela clínica atualizados.</p>
+              </div>
+            </div>
+            <div class="two-column">
+              <article class="panel form-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3 id="convenio-form-title">Novo convênio</h3>
+                    <p>Informe nome e código identificador.</p>
+                  </div>
+                </div>
+                <form id="form-convenio" class="form-grid">
+                  <input type="hidden" id="convenio-id" /><label class="field"
+                    ><span>Nome</span
+                    ><input
+                      id="convenio-nome"
+                      placeholder="Ex.: Saúde Mais"
+                      required /></label
+                  ><label class="field"
+                    ><span>Código</span
+                    ><input
+                      id="convenio-codigo"
+                      placeholder="Ex.: SM001"
+                      required
+                  /></label>
+                  <div class="form-actions">
+                    <button
+                      type="button"
+                      class="secondary-btn hidden"
+                      id="cancelar-convenio"
+                    >
+                      Cancelar</button
+                    ><button
+                      class="primary-btn"
+                      type="submit"
+                      id="salvar-convenio"
+                    >
+                      Cadastrar
+                    </button>
+                  </div>
+                </form>
+              </article>
+              <article class="panel list-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Convênios cadastrados</h3>
+                    <p id="convenios-count">0 registros</p>
+                  </div>
+                </div>
+                <div id="lista-convenios"></div>
+              </article>
+            </div>
+          </section>
+
+          <section id="pacientes" class="page" data-title="Pacientes">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Cadastros</p>
+                <h2>Pacientes</h2>
+                <p>
+                  Centralize os dados básicos dos pacientes atendidos pela
+                  clínica.
+                </p>
+              </div>
+            </div>
+            <div class="two-column">
+              <article class="panel form-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3 id="paciente-form-title">Novo paciente</h3>
+                    <p>O convênio é opcional.</p>
+                  </div>
+                </div>
+                <form id="form-paciente" class="form-grid">
+                  <input type="hidden" id="paciente-id" /><label class="field"
+                    ><span>Nome completo</span
+                    ><input
+                      id="paciente-nome"
+                      placeholder="Ex.: Carlos Almeida"
+                      required /></label
+                  ><label class="field"
+                    ><span>CPF</span
+                    ><input
+                      id="paciente-cpf"
+                      placeholder="000.000.000-00"
+                      required /></label
+                  ><label class="field"
+                    ><span>Telefone</span
+                    ><input
+                      id="paciente-telefone"
+                      placeholder="(49) 99999-9999"
+                      required /></label
+                  ><label class="field"
+                    ><span>Convênio</span
+                    ><select id="paciente-convenio">
+                      <option value="">Sem convênio</option>
+                    </select></label
+                  >
+                  <div class="form-actions">
+                    <button
+                      type="button"
+                      class="secondary-btn hidden"
+                      id="cancelar-paciente"
+                    >
+                      Cancelar</button
+                    ><button
+                      class="primary-btn"
+                      type="submit"
+                      id="salvar-paciente"
+                    >
+                      Cadastrar
+                    </button>
+                  </div>
+                </form>
+              </article>
+              <article class="panel list-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Pacientes cadastrados</h3>
+                    <p id="pacientes-count">0 registros</p>
+                  </div>
+                </div>
+                <div id="lista-pacientes"></div>
+              </article>
+            </div>
+          </section>
+
+          <section id="medicos" class="page" data-title="Médicos">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Cadastros</p>
+                <h2>Médicos</h2>
+                <p>
+                  Gerencie os profissionais, suas especialidades e horários de
+                  atendimento.
+                </p>
+              </div>
+            </div>
+
+            <div class="two-column">
+              <article class="panel form-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3 id="medico-form-title">Novo médico</h3>
+
+                    <p>
+                      Cadastre a especialidade e a disponibilidade do
+                      profissional.
+                    </p>
+                  </div>
+                </div>
+
+                <form id="form-medico" class="form-grid">
+                  <input type="hidden" id="medico-id" />
+
+                  <label class="field">
+                    <span>Nome completo</span>
+
+                    <input
+                      id="medico-nome"
+                      type="text"
+                      placeholder="Ex.: Dra. Marina Costa"
+                      required
+                    />
+                  </label>
+
+                  <label class="field">
+                    <span>CRM</span>
+
+                    <input
+                      id="medico-crm"
+                      type="text"
+                      placeholder="Ex.: CRM/SC 12345"
+                      required
+                    />
+                  </label>
+
+                  <label class="field">
+                    <span>Especialidade</span>
+
+                    <select id="medico-especialidade" required>
+                      <option value="">Selecione</option>
+                    </select>
+                  </label>
+
+                  <!-- DIAS DE ATENDIMENTO -->
+
+                  <div class="field">
+                    <span>Dias de atendimento</span>
+
+                    <div class="checkbox-group">
+                      <label class="checkbox-item">
+                        <input type="checkbox" name="dias-medico" value="1" />
+                        Segunda-feira
+                      </label>
+
+                      <label class="checkbox-item">
+                        <input type="checkbox" name="dias-medico" value="2" />
+                        Terça-feira
+                      </label>
+
+                      <label class="checkbox-item">
+                        <input type="checkbox" name="dias-medico" value="3" />
+                        Quarta-feira
+                      </label>
+
+                      <label class="checkbox-item">
+                        <input type="checkbox" name="dias-medico" value="4" />
+                        Quinta-feira
+                      </label>
+
+                      <label class="checkbox-item">
+                        <input type="checkbox" name="dias-medico" value="5" />
+                        Sexta-feira
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- HORÁRIOS -->
+
+                  <div class="field-row">
+                    <label class="field">
+                      <span>Início do atendimento</span>
+
+                      <input
+                        id="medico-hora-inicio"
+                        type="time"
+                        min="08:00"
+                        max="18:00"
+                        required
+                      />
+                    </label>
+
+                    <label class="field">
+                      <span>Fim do atendimento</span>
+
+                      <input
+                        id="medico-hora-fim"
+                        type="time"
+                        min="08:00"
+                        max="18:00"
+                        required
+                      />
+                    </label>
+                  </div>
+
+                  <div class="form-actions">
+                    <button
+                      type="button"
+                      class="secondary-btn hidden"
+                      id="cancelar-medico"
+                    >
+                      Cancelar
+                    </button>
+
+                    <button
+                      class="primary-btn"
+                      type="submit"
+                      id="salvar-medico"
+                    >
+                      Cadastrar
+                    </button>
+                  </div>
+                </form>
+              </article>
+
+              <article class="panel list-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Médicos cadastrados</h3>
+                    <p id="medicos-count">0 registros</p>
+                  </div>
+                </div>
+
+                <div id="lista-medicos"></div>
+              </article>
+            </div>
+          </section>
+          <section id="especialidades" class="page" data-title="Especialidades">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Cadastros</p>
+                <h2>Especialidades médicas</h2>
+                <p>Organize as áreas de atendimento oferecidas pela clínica.</p>
+              </div>
+            </div>
+            <div class="two-column">
+              <article class="panel form-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3 id="especialidade-form-title">Nova especialidade</h3>
+                    <p>Informe o nome da área médica.</p>
+                  </div>
+                </div>
+                <form id="form-especialidade" class="form-grid">
+                  <input type="hidden" id="especialidade-id" /><label
+                    class="field"
+                    ><span>Nome</span
+                    ><input
+                      id="especialidade-nome"
+                      placeholder="Ex.: Cardiologia"
+                      required
+                  /></label>
+                  <div class="form-actions">
+                    <button
+                      type="button"
+                      class="secondary-btn hidden"
+                      id="cancelar-especialidade"
+                    >
+                      Cancelar</button
+                    ><button
+                      class="primary-btn"
+                      type="submit"
+                      id="salvar-especialidade"
+                    >
+                      Cadastrar
+                    </button>
+                  </div>
+                </form>
+              </article>
+              <article class="panel list-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Especialidades cadastradas</h3>
+                    <p id="especialidades-count">0 registros</p>
+                  </div>
+                </div>
+                <div id="lista-especialidades"></div>
+              </article>
+            </div>
+          </section>
+
+          <section id="agendamentos" class="page" data-title="Agendamentos">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Atendimento</p>
+                <h2>Agendamentos</h2>
+                <p>
+                  Organize as consultas e evite conflitos de médico ou sala no
+                  mesmo horário.
+                </p>
+              </div>
+            </div>
+            <div class="two-column appointments-layout">
+              <article class="panel form-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3 id="agendamento-form-title">Nova consulta</h3>
+                    <p>Selecione paciente, médico, sala, data e horário.</p>
+                  </div>
+                </div>
+                <form id="form-agendamento" class="form-grid">
+                  <input type="hidden" id="agendamento-id" /><label
+                    class="field"
+                    ><span>Paciente</span
+                    ><select id="agendamento-paciente" required>
+                      <option value="">Selecione</option>
+                    </select></label
+                  ><label class="field"
+                    ><span>Médico</span
+                    ><select id="agendamento-medico" required>
+                      <option value="">Selecione</option>
+                    </select></label
+                  ><label class="field"
+                    ><span>Sala</span
+                    ><select id="agendamento-sala" required>
+                      <option value="">Selecione</option>
+                    </select></label
+                  >
+                  <div class="field-row">
+                    <label class="field"
+                      ><span>Data</span
+                      ><input
+                        id="agendamento-data"
+                        type="date"
+                        required /></label
+                    ><label class="field"
+                      ><span>Horário</span
+                      ><input id="agendamento-hora" type="time" required
+                    /></label>
+                  </div>
+                  <p id="mensagem-agendamento" class="message hidden"></p>
+                  <div class="form-actions">
+                    <button
+                      type="button"
+                      class="secondary-btn hidden"
+                      id="cancelar-agendamento"
+                    >
+                      Cancelar</button
+                    ><button
+                      class="primary-btn"
+                      type="submit"
+                      id="salvar-agendamento"
+                    >
+                      Agendar consulta
+                    </button>
+                  </div>
+                </form>
+              </article>
+              <article class="panel list-panel">
+                <div class="panel-header">
+                  <div>
+                    <h3>Consultas agendadas</h3>
+                    <p id="agendamentos-count">0 registros</p>
+                  </div>
+                </div>
+                <div id="lista-agendamentos"></div>
+              </article>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script>
+      window.ClinicApp = {
+        get(key) {
+          try {
+            return JSON.parse(localStorage.getItem(`clinica_${key}`) || "[]");
+          } catch {
+            return [];
+          }
+        },
+        set(key, value) {
+          localStorage.setItem(`clinica_${key}`, JSON.stringify(value));
+          this.refreshDashboard();
+        },
+        uid() {
+          return `${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+        },
+        escape(value = "") {
+          return String(value).replace(
+            /[&<>'"]/g,
+            (c) =>
+              ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                "'": "&#39;",
+                '"': "&quot;",
+              })[c],
+          );
+        },
+        countText(n) {
+          return `${n} ${n === 1 ? "registro" : "registros"}`;
+        },
+        toast(message, type = "success") {
+          const el = document.getElementById("toast");
+          el.textContent = message;
+          el.className = `toast show ${type}`;
+          clearTimeout(this.toastTimer);
+          this.toastTimer = setTimeout(() => (el.className = "toast"), 2600);
+        },
+        confirm(message) {
+          return window.confirm(message);
+        },
+        fillSelect(
+          id,
+          items,
+          labelFn,
+          placeholder = "Selecione",
+          selected = "",
+        ) {
+          const el = document.getElementById(id);
+          if (!el) return;
+          el.innerHTML =
+            `<option value="">${placeholder}</option>` +
+            items
+              .map(
+                (item) =>
+                  `<option value="${this.escape(item.id)}" ${item.id === selected ? "selected" : ""}>${this.escape(labelFn(item))}</option>`,
+              )
+              .join("");
+        },
+        emptyState(text) {
+          return `<div class="empty-state"><div class="empty-icon">○</div><strong>Nenhum registro</strong><span>${text}</span></div>`;
+        },
+        table(columns, rows, actions = {}) {
+          if (!rows.length)
+            return this.emptyState("Cadastre um item para começar.");
+          const head = columns.map((c) => `<th>${c.label}</th>`).join("");
+          const body = rows
+            .map(
+              (row) =>
+                `<tr>${columns.map((c) => `<td data-label="${c.label}">${c.render ? c.render(row) : this.escape(row[c.key] ?? "—")}</td>`).join("")}<td class="actions" data-label="Ações">${actions.edit ? `<button class="icon-btn edit" onclick="${actions.edit}('${row.id}')" title="Editar">Editar</button>` : ""}${actions.remove ? `<button class="icon-btn danger" onclick="${actions.remove}('${row.id}')" title="Excluir">Excluir</button>` : ""}</td></tr>`,
+            )
+            .join("");
+          return `<div class="table-wrap"><table><thead><tr>${head}<th>Ações</th></tr></thead><tbody>${body}</tbody></table></div>`;
+        },
+        show(sectionId) {
+          document
+            .querySelectorAll(".page")
+            .forEach((p) => p.classList.remove("active-page"));
+          document
+            .querySelectorAll(".nav-item")
+            .forEach((b) =>
+              b.classList.toggle("active", b.dataset.section === sectionId),
+            );
+          const page = document.getElementById(sectionId);
+          if (!page) return;
+          page.classList.add("active-page");
+          document.getElementById("page-title").textContent =
+            sectionId === "inicio"
+              ? "Visão geral"
+              : page.dataset.title || "Clínica";
+          document.querySelector(".sidebar").classList.remove("open");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        },
+        refreshAllSelects() {
+          if (typeof renderConvenioSelects === "function")
+            renderConvenioSelects();
+          if (typeof renderEspecialidadeSelects === "function")
+            renderEspecialidadeSelects();
+          if (typeof renderAgendamentoSelects === "function")
+            renderAgendamentoSelects();
+        },
+        refreshDashboard() {
+          const ids = ["pacientes", "medicos", "salas", "agendamentos"];
+          ids.forEach((key) => {
+            const el = document.getElementById(`stat-${key}`);
+            if (el) el.textContent = this.get(key).length;
+          });
+          const resumo = document.getElementById("agenda-resumo");
+          if (!resumo) return;
+          const pacientes = this.get("pacientes"),
+            medicos = this.get("medicos"),
+            salas = this.get("salas");
+          const agenda = this.get("agendamentos")
+            .slice()
+            .sort((a, b) =>
+              `${a.data}${a.hora}`.localeCompare(`${b.data}${b.hora}`),
+            )
+            .slice(0, 4);
+          if (!agenda.length) {
+            resumo.innerHTML = this.emptyState(
+              "Nenhuma consulta agendada ainda.",
+            );
+            return;
+          }
+          resumo.innerHTML = agenda
+            .map((a) => {
+              const p =
+                pacientes.find((x) => x.id === a.pacienteId)?.nome ||
+                "Paciente";
+              const m =
+                medicos.find((x) => x.id === a.medicoId)?.nome || "Médico";
+              const s = salas.find((x) => x.id === a.salaId)?.sigla || "Sala";
+              const date = a.data
+                ? new Date(`${a.data}T12:00:00`).toLocaleDateString("pt-BR", {
+                    day: "2-digit",
+                    month: "short",
+                  })
+                : "—";
+              return `<div class="agenda-item"><div class="date-box"><strong>${date.split(" ")[0]}</strong><span>${date.split(" ")[1] || ""}</span></div><div><strong>${this.escape(p)}</strong><span>${this.escape(m)} • ${this.escape(s)}</span></div><time>${this.escape(a.hora)}</time></div>`;
+            })
+            .join("");
+        },
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document
+          .querySelectorAll("[data-section]")
+          .forEach((btn) =>
+            btn.addEventListener("click", () =>
+              ClinicApp.show(btn.dataset.section),
+            ),
+          );
+        document
+          .querySelectorAll("[data-go]")
+          .forEach((btn) =>
+            btn.addEventListener("click", () => ClinicApp.show(btn.dataset.go)),
+          );
+        document
+          .getElementById("mobile-menu")
+          .addEventListener("click", () =>
+            document.querySelector(".sidebar").classList.toggle("open"),
+          );
+        ClinicApp.refreshDashboard();
+      });
+    </script>
+    <script src="js/secretarias.js"></script>
+    <script src="js/salas.js"></script>
+    <script src="js/convenios.js"></script>
+    <script src="js/pacientes.js"></script>
+    <script src="js/medicos.js"></script>
+    <script src="js/especialidades.js"></script>
+    <script src="js/agendamentos.js"></script>
+  </body>
+</html>
